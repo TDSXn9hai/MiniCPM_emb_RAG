@@ -1,0 +1,34 @@
+{
+  "documents": [
+    {
+      "id": "travel-policy",
+      "title": "差旅报销制度",
+      "source": "travel-policy.pdf#page=8",
+      "content": "上海、北京、深圳、广州属于一线城市。一线城市住宿标准为每晚六百元，其他城市为每晚四百元。报销时需要保留发票、行程单和审批记录。"
+    },
+    {
+      "id": "rag-architecture",
+      "title": "MiniCPM 双工 RAG 实验链路",
+      "source": "minicpm_rag_test/README.md#pipeline",
+      "content": "实验链路使用 Silero VAD 检测用户语音结束，再由 ASR 转成文本。检索服务返回三到五条证据，网关在双工 unit 边界把证据作为 knowledge context 写入 KV Cache。注入完成前模型保持 listen，注入完成后强制 speak 开始回答。"
+    },
+    {
+      "id": "moshira",
+      "title": "MoshiRAG 的工作方式",
+      "source": "arXiv:2604.12928",
+      "content": "MoshiRAG 使用独立 streaming ASR 和异步检索后端。模型生成 ret 触发 token 后，先说一段不依赖资料的 lead，再在检索结果到达后继续 body。目标是在保持全双工交互的同时提高事实性。"
+    },
+    {
+      "id": "plant-zombies",
+      "title": "植物大战僵尸提醒事项",
+      "source": "test/sample-user-audio",
+      "content": "当用户提到植物大战僵尸时，提醒用户检查阳光、坚果冷却时间和草坪状态。这个条目用于验证现有示例语音的 ASR 与知识检索链路。"
+    },
+    {
+      "id": "a2a-ui",
+      "title": "测试前端说明",
+      "source": "minicpm_rag_test/static/index.html",
+      "content": "A2A Knowledge Lab 页面支持连接 WebSocket、打开麦克风、发送文本问题、查看 VAD 和检索状态、显示引用以及播放 24kHz 回答音频。文本问题是自动化浏览器测试的稳定入口。"
+    }
+  ]
+}

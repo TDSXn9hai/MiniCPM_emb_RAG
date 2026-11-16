@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A2A Knowledge Lab · MiniCPM</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="/" aria-label="A2A Knowledge Lab 首页">
+        <span class="wordmark-mark" aria-hidden="true"></span>
+        <span>A2A Knowledge Lab</span>
+      </a>
+      <div class="connection">
+        <span id="runtimeLabel" class="meta-label">mock / whisper</span>
+        <span id="connectionState" class="connection-state" role="status">未连接</span>
+        <button id="connectButton" class="button button-primary" type="button">
+          连接实验台
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="pageTitle">
+        <div class="hero-copy">
+          <p class="kicker">REAL-TIME SPEECH · RETRIEVAL · DUPLEX</p>
+          <h1 id="pageTitle">
+            <span>让双工模型</span>
+            <strong>先查，再说。</strong>
+          </h1>
+          <p class="lede">
+            VAD 截取问题，ASR 生成查询，检索证据写入双工上下文。
+            在证据就绪前，模型保持聆听；证据注入后，再放行回答。
+          </p>
+        </div>
+
+        <div class="audio-deck" aria-label="音频输入状态">
+          <div class="deck-head">
+            <span id="vadLabel">VAD / 等待</span>
+            <span id="audioState">16 kHz PCM</span>
+          </div>
+          <canvas id="waveform" width="720" height="180"></canvas>
+          <div class="deck-controls">
+            <button id="micButton" class="mic-button" type="button" disabled>
+              <span class="mic-glyph" aria-hidden="true"></span>
+              <span id="micButtonLabel">打开麦克风</span>
+            </button>
+            <button id="interruptButton" class="button button-danger" type="button" disabled>
+              打断
+            </button>
+            <div class="deck-readout">
+              <span class="meta-label">当前状态</span>
+              <strong id="stateLabel">离线</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="workbench">
+        <div class="conversation">
+          <div class="section-head">
+            <div>
+              <p class="kicker">LIVE TRANSCRIPT</p>
+              <h2>对话</h2>
+            </div>
+            <div class="pipeline" aria-label="RAG 阶段">
+              <span data-step="listening">聆听</span>
+              <span data-step="retrieving">检索</span>
+              <span data-step="injecting">注入</span>
+              <span data-step="answering">回答</span>
+            </div>
+          </div>
+
+          <div id="transcript" class="transcript" aria-live="polite">
+            <div id="userStream" class="message message-user">
+              <span class="message-role">你</span>
+              <p>连接后说话，或直接提交一个文本问题。</p>
+            </div>
+            <div id="assistantStream" class="message message-assistant">
+              <span class="message-role">助手</span>
+              <p>回答会在这里逐段出现。</p>
+            </div>
+          </div>
+
+          <form id="queryForm" class="query-form">
+            <label for="textQuery">文本问题（用于稳定复现）</label>
+            <div class="query-row">
+              <input
+                id="textQuery"
+                name="textQuery"
+                type="text"
+                autocomplete="off"
+                value="上海出差住宿能报多少？"
+              />
+              <button id="sendQuery" class="button button-signal" type="submit" disabled>
+                发送
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <aside class="inspector">
+          <div class="section-head">
+            <div>
+              <p class="kicker">GROUNDING TRACE</p>
+              <h2>证据与延迟</h2>
+            </div>
+          </div>
+
+          <div class="metrics" aria-label="延迟指标">
+            <div>
+              <span>检索</span>
+              <strong id="retrievalMs">—</strong>
+            </div>
+            <div>
+              <span>首文本</span>
+              <strong id="firstTextMs">—</strong>
+            </div>
+            <div>
+              <span>音频样本</span>
+              <strong id="audioSamples">0</strong>
+            </div>
+          </div>
+
+          <div id="evidenceList" class="evidence-list">
+            <p class="empty-state">检索结果与来源会显示在这里。</p>
+          </div>
+
+          <details class="event-details">
+            <summary>原始事件</summary>
+            <pre id="eventLog"></pre>
+          </details>
+        </aside>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/static/app.js"></script>
+  </body>
+</html>

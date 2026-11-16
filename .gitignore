@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.run/
+data/index/
+data/sessions/
+models/
+assets/vad_model/*.onnx
+*.log
+tests/browser/*.png
+tests/browser/*.wav
